@@ -5,7 +5,7 @@
 		</h1>
 		<div>
 			<router-link to="/coaches">All Coaches</router-link>
-			<router-link to="/request">Requests</router-link>
+			<router-link to="/requests">Requests</router-link>
 		</div>
 	</header>
 </template>
