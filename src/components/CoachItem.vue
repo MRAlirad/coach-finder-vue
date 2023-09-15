@@ -25,6 +25,7 @@
 </template>
 
 <script>
+
 	import Link from './Link.vue';
 	import Badge from './Badge.vue';
 
@@ -59,6 +60,13 @@
 
 	h3 {
 		font-size: 1.5rem;
+	}
+
+	.experties,
+	.actions {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 	}
 
 	.actions {
