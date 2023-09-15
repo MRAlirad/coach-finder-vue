@@ -3,25 +3,40 @@
 		<h3>{{ fullName }}</h3>
 		<h4>$ {{ rate }}/hour</h4>
 		<div class="experties">
-			<span
+			<Badge
 				v-for="area in areas"
 				:key="area"
-				>{{ area }}</span
-			>
+				:type="area"
+				:title="area"
+			/>
 		</div>
 		<div class="actions">
-			<router-link :to="coachContactLink">Contact</router-link>
-			<router-link :to="coachDetailLink">View Details</router-link>
+			<Link
+				:to="coachContactLink"
+				text="Contact"
+				mode="outline"
+			/>
+			<Link
+				:to="coachDetailLink"
+				text="View Details"
+			/>
 		</div>
 	</section>
 </template>
 
 <script>
+	import Link from './Link.vue';
+	import Badge from './Badge.vue';
+
 	export default {
-		props: ['id', 'firstName', 'LastName', 'rate', 'areas'],
+		components: {
+			Link,
+			Badge,
+		},
+		props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
 		computed: {
 			fullName() {
-				return this.firstName + ' ' + this.LastName;
+				return this.firstName + ' ' + this.lastName;
 			},
 			coachContactLink() {
 				return `${this.$route.path}/${this.id}/contact`;
@@ -35,23 +50,15 @@
 
 <style scoped>
 	.coach-item {
-		margin: 1rem 0;
 		border: 1px solid #424242;
 		border-radius: 12px;
 		padding: 1rem;
+		display: grid;
+		gap: 0.6rem;
 	}
 
 	h3 {
 		font-size: 1.5rem;
-	}
-
-	h3,
-	h4 {
-		margin: 0.5rem 0;
-	}
-
-	div {
-		margin: 0.5rem 0;
 	}
 
 	.actions {
