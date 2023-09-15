@@ -2,7 +2,7 @@
 	<div class="coach-registration-page">
 		<section class="form-section">
 			<h2>Register as a coach now!</h2>
-			<CoachForm />
+			<CoachForm @save-data="saveData" />
 		</section>
 	</div>
 </template>
@@ -12,6 +12,12 @@
 	export default {
 		components: {
 			CoachForm,
+		},
+		methods: {
+			saveData(data) {
+				this.$store.dispatch('coaches/registerCoach', data);
+				this.$router.replace('/coaches');
+			},
 		},
 	};
 </script>

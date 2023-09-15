@@ -7,6 +7,7 @@
 				mode="outline"
 			/>
 			<Link
+				v-if="!isCoach"
 				to="/register"
 				text="Register as Coach"
 			/>
@@ -63,6 +64,9 @@
 			},
 			hasCoaches() {
 				return this.$store.getters['coaches/hasCoaches'];
+			},
+			isCoach() {
+				return this.$store.getters['coaches/isCoach'];
 			},
 		},
 		methods: {
