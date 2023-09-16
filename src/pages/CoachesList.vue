@@ -5,6 +5,7 @@
 			<Button
 				text="Refresh"
 				mode="outline"
+				@on-click="loadCoaches"
 			/>
 			<Link
 				v-if="!isCoach"
@@ -73,7 +74,13 @@
 			setFilters(updatedFilters) {
 				this.activeFilters = updatedFilters;
 			},
+			loadCoaches(){
+				this.$store.dispatch('coaches/loadCoaches')
+			}
 		},
+		created(){
+			this.loadCoaches();
+		}
 	};
 </script>
 

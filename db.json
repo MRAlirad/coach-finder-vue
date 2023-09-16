@@ -1,7 +1,12 @@
 {
-  "coaches": [
-    {
-      "id": "c3"
-    }
-  ]
+	"coaches": [
+		{
+			"id": "c3",
+			"firstName": "Mohammadreza",
+			"lastName": "Alirad",
+			"areas": ["frontend", "backend", "career"],
+			"description": "Desctiption!",
+			"hourlyRate": 30
+		}
+	]
 }
