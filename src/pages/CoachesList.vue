@@ -1,4 +1,7 @@
 <template>
+	<Dialog :show="!!error" title="An error occured!" @close="handleError">
+		<p>{{ error }}</p>
+	</Dialog>
 	<CoachFilter @change-filter="setFilters" />
 	<div class="coaches-segment">
 		<div class="controls">
@@ -40,6 +43,7 @@
 	import Button from '../components/Button.vue';
 	import Link from '../components/Link.vue';
 	import Spinner from '../components/Spinner.vue';
+	import Dialog from '../components/Dialog.vue';
 
 	export default {
 		components: {
@@ -48,10 +52,12 @@
 			Button,
 			Link,
 			Spinner,
+			Dialog,
 		},
 		data() {
 			return {
 				isLoading: false,
+				error: null,
 				activeFilters: {
 					frontend: true,
 					backend: true,
@@ -82,8 +88,16 @@
 			},
 			async loadCoaches(){
 				this.isLoading = true;
-				await this.$store.dispatch('coaches/loadCoaches');
+				try {
+					await this.$store.dispatch('coaches/loadCoaches');
+				} catch(error) {
+					this.error = error.message || 'sth went wrong';
+					console.log(this.error)
+				}
 				this.isLoading = false;
+			},
+			handleError(){
+				this.error = null;
 			}
 		},
 		created(){
