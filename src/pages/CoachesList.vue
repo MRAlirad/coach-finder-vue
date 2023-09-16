@@ -8,14 +8,17 @@
 				@on-click="loadCoaches"
 			/>
 			<Link
-				v-if="!isCoach"
+				v-if="!isCoach && !isLoading"
 				to="/register"
 				text="Register as Coach"
 			/>
 		</div>
+		<div v-if="isLoading">
+			<Spinner />
+		</div>
 		<div
 			class="coaches-list"
-			v-if="hasCoaches"
+			v-else-if="hasCoaches"
 		>
 			<CoachItem
 				v-for="coach in filteredCoaches"
@@ -36,6 +39,7 @@
 	import CoachFilter from '../components/CoachFilter.vue';
 	import Button from '../components/Button.vue';
 	import Link from '../components/Link.vue';
+	import Spinner from '../components/Spinner.vue';
 
 	export default {
 		components: {
@@ -43,9 +47,11 @@
 			CoachFilter,
 			Button,
 			Link,
+			Spinner,
 		},
 		data() {
 			return {
+				isLoading: false,
 				activeFilters: {
 					frontend: true,
 					backend: true,
@@ -64,7 +70,7 @@
 				});
 			},
 			hasCoaches() {
-				return this.$store.getters['coaches/hasCoaches'];
+				return !this.isLoading && this.$store.getters['coaches/hasCoaches'];
 			},
 			isCoach() {
 				return this.$store.getters['coaches/isCoach'];
@@ -74,8 +80,10 @@
 			setFilters(updatedFilters) {
 				this.activeFilters = updatedFilters;
 			},
-			loadCoaches(){
-				this.$store.dispatch('coaches/loadCoaches')
+			async loadCoaches(){
+				this.isLoading = true;
+				await this.$store.dispatch('coaches/loadCoaches');
+				this.isLoading = false;
 			}
 		},
 		created(){
