@@ -1,8 +1,8 @@
 export default {
-    registerCoach(context, data)
+    async registerCoach(context, data)
     {
+        const userId = context.rootGetters.userId;
         const coachData = {
-            id: context.rootGetters.userId,
             firstName: data.first,
             lastName: data.last,
             description: data.desc,
@@ -10,6 +10,21 @@ export default {
             areas: data.areas,
         };
 
-        context.commit('registerCoach', coachData)
+        const response = await fetch(`http://localhost:5000/coaches/${userId}`, {
+            method: 'PUT',
+            body: JSON.stringify(coachData),
+        });
+
+        console.log(response)
+
+        // const data = await response.json();
+
+        if(!response.ok)
+            // error
+
+        context.commit('registerCoach', {
+            ...coachData,
+            id: userId,
+        });
     }
 };
